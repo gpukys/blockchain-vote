@@ -21,7 +21,7 @@ router.get('/validate', async function(req, res, next) {
 });
 
 router.post('/register', [
-  check('data').isRequired(),
+  check('data').isLength({min: 1}),
 ], async function(req, res, next) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
