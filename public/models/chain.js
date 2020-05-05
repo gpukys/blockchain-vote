@@ -1,4 +1,4 @@
-var pnoDb = require('./mongo.js');
+var voteDb = require('./mongo.js');
 const SHA256 = require('crypto-js/sha256');
 
 
@@ -7,13 +7,13 @@ module.exports = class CryptoBlockchain{
 
   async obtainLatestBlock(){
     let database = null;
-    return pnoDb.open()
+    return voteDb.open()
     .then((db)=>{
         database = db;
-        return db.db('pno').collection('pno')    
+        return db.db('vote').collection('vote')    
     })
-    .then((pno)=>{
-        return pno.findOne({}, {sort:{$natural:-1}});
+    .then((vote)=>{
+        return vote.findOne({}, {sort:{$natural:-1}});
     })
     .then((result)=>{
         database.close();
@@ -29,13 +29,13 @@ module.exports = class CryptoBlockchain{
       newBlock.index = latest.index + 1;
       newBlock.hash = newBlock.computeHash();        
       let database = null;
-      return pnoDb.open()
+      return voteDb.open()
       .then((db)=>{
           database = db;
-          return db.db('pno').collection('pno')    
+          return db.db('vote').collection('vote')    
       })
-      .then((pno)=>{
-          return pno.insertOne(newBlock);
+      .then((vote)=>{
+          return vote.insertOne(newBlock);
       })
       .then((result)=>{
           database.close();
@@ -47,13 +47,13 @@ module.exports = class CryptoBlockchain{
   }
   async checkChainValidity(){
     let database = null;
-    return pnoDb.open()
+    return voteDb.open()
     .then((db)=>{
         database = db;
-        return db.db('pno').collection('pno')    
+        return db.db('vote').collection('vote')    
     })
-    .then((pno)=>{
-        return pno.find({});
+    .then((vote)=>{
+        return vote.find({});
     })
     .then((result)=>{
         function computeHash(block){

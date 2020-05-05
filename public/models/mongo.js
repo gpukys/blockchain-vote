@@ -1,5 +1,5 @@
 var mongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://admin:admin@cluster0-rsy4j.mongodb.net/test?retryWrites=true&w=majority";
+const uri = "mongodb+srv://admin:<password>@cluster0-f1kav.mongodb.net/test?retryWrites=true&w=majority";
 
 function open(){
   // Connection URL. This is where your mongodb server is running.
