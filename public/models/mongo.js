@@ -23,6 +23,7 @@ function close(db){
 }
 
 let db = {
+  collectionName: undefined,
   open : open,
   close: close
 }

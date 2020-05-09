@@ -10,7 +10,7 @@ module.exports = class CryptoBlockchain{
     return voteDb.open()
     .then((db)=>{
         database = db;
-        return db.db('vote').collection('vote')    
+        return db.db('vote').collection(voteDb.collectionName)    
     })
     .then((vote)=>{
         return vote.findOne({}, {sort:{$natural:-1}});
@@ -32,7 +32,7 @@ module.exports = class CryptoBlockchain{
       return voteDb.open()
       .then((db)=>{
           database = db;
-          return db.db('vote').collection('vote')    
+          return db.db('vote').collection(voteDb.collectionName)    
       })
       .then((vote)=>{
           return vote.insertOne(newBlock);
@@ -50,7 +50,7 @@ module.exports = class CryptoBlockchain{
     return voteDb.open()
     .then((db)=>{
         database = db;
-        return db.db('vote').collection('vote')    
+        return db.db('vote').collection(voteDb.collectionName)    
     })
     .then((vote)=>{
         return vote.find({});
