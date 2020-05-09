@@ -11,7 +11,7 @@ router.get('/latest', async function(req, res, next) {
   res.json(latestBlock);
 })
 
-router.get('/validate', async function(req, res, next) {
+router.post('/validate', async function(req, res, next) {
   await BlockChain.checkChainValidity().then(e => {
     res.send();
   }).catch(err => {
