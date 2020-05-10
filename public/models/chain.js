@@ -27,7 +27,7 @@ module.exports = class CryptoBlockchain{
       const latest = await this.obtainLatestBlock();
       newBlock.precedingHash = latest.hash;
       newBlock.index = latest.index + 1;
-      newBlock.hash = newBlock.computeHash();        
+      newBlock.hash = newBlock.computeHash();
       let database = null;
       return voteDb.open()
       .then((db)=>{
@@ -82,5 +82,26 @@ module.exports = class CryptoBlockchain{
     }).catch(err => {
       reject(false);
     })
+}
+async getAllResults(){
+  let database = null;
+  return voteDb.open()
+  .then((db)=>{
+      database = db;
+      return db.db('vote').collection(voteDb.collectionName)    
+  })
+  .then((vote)=>{
+      return vote.find({ index: { $ne: 0 } });
+  })
+  .then((res)=>{
+    return res.toArray()
+  })
+  .then((result)=>{
+      database.close();
+      return result;
+  })
+  .catch((err)=>{
+    console.error(err);
+  })
 }
 }

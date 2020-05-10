@@ -54,18 +54,30 @@ router.post('/:id/validate', async function(req, res, next) {
 });
 
 router.post('/:id/block/register', [
-  check('data').isLength({min: 1}),
+  check('pollId').isLength({min: 1}),
+  check('choiceId').isLength({min: 1}),
 ], async function(req, res, next) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).send();
   } else {
     voteDb.collectionName = req.params.id;
-    await BlockChain.addNewBlock(new CryptoBlock(0, new Date(), req.body.data));
+    await BlockChain.addNewBlock(new CryptoBlock(0, new Date(), req.body));
     res.status(201);
     res.send();
   }
   
 })
+
+router.get('/:id/results', async function(req, res, next) {
+  voteDb.collectionName = req.params.id;
+  await BlockChain.getAllResults().then(e => {
+    res.send(e);
+  }).catch(err => {
+    console.log(err);
+    res.status(500);
+    res.send();
+  });
+});
 
 module.exports = router;

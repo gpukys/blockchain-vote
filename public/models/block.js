@@ -3,7 +3,8 @@ module.exports = class CryptoBlock{
     constructor(index, timestamp, data, precedingHash=" "){
      this.index = index;
      this.timestamp = timestamp;
-     this.data = data
+     this.pollId = data.pollId,
+     this.choiceId = data.choiceId,
      this.precedingHash = precedingHash;
      this.hash = this.computeHash();     
     }
