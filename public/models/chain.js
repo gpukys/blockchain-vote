@@ -57,10 +57,13 @@ module.exports = class CryptoBlockchain{
     })
     .then((result)=>{
         function computeHash(block){
-          return SHA256(block.index + block.precedingHash + block.timestamp + JSON.stringify(block.data)).toString();
+          return SHA256(block.index + block.precedingHash + block.timestamp + JSON.stringify({pollId: block.pollId, choiceId: block.choiceId}).toString())
         }
         return new Promise(function(resolve, reject) {
           result.toArray(function(err, block) {
+            if (block.length === 1) {
+              resolve(true);
+            }
             for (let i = 1; i<block.length; i++) {
               const currentBlock = block[i];
               const precedingBlock = block[i - 1];

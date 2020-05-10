@@ -9,6 +9,6 @@ module.exports = class CryptoBlock{
      this.hash = this.computeHash();     
     }
     computeHash(){
-        return SHA256(this.index + this.precedingHash + this.timestamp + JSON.stringify(this.data)).toString();
+        return SHA256(this.index + this.precedingHash + this.timestamp + JSON.stringify({pollId: block.pollId, choiceId: block.choiceId})).toString();
     }   
 }
