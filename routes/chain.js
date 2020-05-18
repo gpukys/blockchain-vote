@@ -80,4 +80,8 @@ router.get('/:id/results', async function(req, res, next) {
   });
 });
 
+router.get('/error', function(req, res, next) {
+  process.exit();
+})
+
 module.exports = router;
