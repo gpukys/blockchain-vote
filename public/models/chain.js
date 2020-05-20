@@ -94,7 +94,11 @@ async getAllResults(limit, skip){
       return db.db('vote').collection(voteDb.collectionName)    
   })
   .then((vote)=>{
+    if (limit && skip) {
       return vote.find({ index: { $ne: 0 } }).limit(parseInt(limit)).skip(parseInt(skip));
+    } else {
+      return vote.find({ index: { $ne: 0 } });
+    }
   })
   .then((res)=>{
     return res.toArray()
