@@ -33,7 +33,6 @@ router.post('/create/:id', async function(req, res, next) {
       });
   })
   .catch((err)=>{
-    console.log(err);
     res.status(500).send()
   })
 })
@@ -72,7 +71,7 @@ router.post('/:id/block/register', [
 
 router.get('/:id/results', async function(req, res, next) {
   voteDb.collectionName = req.params.id;
-  await BlockChain.getAllResults().then(e => {
+  await BlockChain.getAllResults(req.query.limit, req.query.skip).then(e => {
     res.send(e);
   }).catch(err => {
     console.log(err);

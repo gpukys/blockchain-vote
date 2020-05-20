@@ -86,7 +86,7 @@ module.exports = class CryptoBlockchain{
       reject(false);
     })
 }
-async getAllResults(){
+async getAllResults(limit, skip){
   let database = null;
   return voteDb.open()
   .then((db)=>{
@@ -94,7 +94,7 @@ async getAllResults(){
       return db.db('vote').collection(voteDb.collectionName)    
   })
   .then((vote)=>{
-      return vote.find({ index: { $ne: 0 } });
+      return vote.find({ index: { $ne: 0 } }).limit(parseInt(limit)).skip(parseInt(skip));
   })
   .then((res)=>{
     return res.toArray()
